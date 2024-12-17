@@ -7,9 +7,7 @@ class Dashboard extends CI_Controller {
         parent::__construct();
         $this->load->library('session'); // Load the session library
         $this->load->helper('url'); // To help with redirection if needed
-        $this->load->model('User_model');
-        $this->load->helper('url');
-        $this->load->library('session'); // Load session library for user sessions
+        $this->load->model('Goal_model'); // Load the Goal model
         $this->load->database(); // Load database
 
         // Check if the user is logged in
@@ -20,8 +18,58 @@ class Dashboard extends CI_Controller {
     }
 
     public function index() {
-        // Load the dashboard view if the user is logged in
-        $this->load->view('dashboard');
+        $user_id = $this->session->userdata('user_id');
+        // Fetch all goals for the logged-in user
+        $data['goals'] = $this->Goal_model->get_goals($user_id);
+        // Load the dashboard view with the goals
+        $this->load->view('dashboard', $data);
     }
-    
+
+    // Create a new goal
+    public function create_goal() {
+        if ($this->input->post()) {
+            $user_id = $this->session->userdata('user_id');
+            $data = array(
+                'user_id' => $user_id,
+                'title' => $this->input->post('title'),
+                'description' => $this->input->post('description'),
+                'status' => 'pending' // Default status
+            );
+            $this->Goal_model->create_goal($data);
+            redirect('dashboard');  // Redirect back to the dashboard
+        }
+
+        // If the form is not submitted, load the create goal page
+        $this->load->view('create_goal');
+    }
+
+    // Edit an existing goal
+    public function edit_goal($goal_id) {
+        // Fetch the goal details
+        $goal = $this->Goal_model->get_goal($goal_id);
+        if ($goal) {
+            $this->load->view('edit_goal', ['goal' => $goal]);
+        } else {
+            show_404();
+        }
+    }
+
+    // Update goal details
+    public function update_goal($goal_id) {
+        if ($this->input->post()) {
+            $data = array(
+                'title' => $this->input->post('title'),
+                'description' => $this->input->post('description'),
+                'status' => $this->input->post('status')
+            );
+            $this->Goal_model->update_goal($goal_id, $data);
+            redirect('dashboard');  // Redirect back to the dashboard
+        }
+    }
+
+    // Delete a goal
+    public function delete_goal($goal_id) {
+        $this->Goal_model->delete_goal($goal_id);
+        redirect('dashboard');  // Redirect back to the dashboard
+    }
 }

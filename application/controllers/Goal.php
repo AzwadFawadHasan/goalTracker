@@ -1,53 +1,40 @@
 <?php
-// Goal.php (Controller)
+defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Goal extends CI_Controller {
+class Goal_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('Goal_model');
+        $this->load->database(); // Ensure database is loaded
     }
 
-    public function add() {
-        if ($this->input->post()) {
-            $data = array(
-                'title' => $this->input->post('title'),
-                'description' => $this->input->post('description'),
-                'user_id' => $this->session->userdata('user_id'), // assuming user_id is saved in session
-            );
-            $this->Goal_model->create_goal($data);
-            redirect('goal/list');  // Redirect to the goal list after adding
-        }
-        $this->load->view('goal_add');  // Load the add goal form
-    }
- 
-    public function list() {
-        $data['goals'] = $this->Goal_model->get_goals();  // Fetch all goals
-        $this->load->view('goal_list', $data);  // Pass the goals to the view
-    }
-    
-    public function edit($id) {
-        $goal = $this->Goal_model->get_goal($id);  // Fetch goal by ID
-        $data['goal'] = $goal;
-        $this->load->view('goal_edit', $data);  // Pass the goal to the edit view
+    // Create a new goal
+    public function create_goal($data) {
+        $this->db->insert('goals', $data);  // Insert the data into the 'goals' table
+        return $this->db->insert_id();      // Return the ID of the inserted goal
     }
 
-    public function update($id) {
-        if ($this->input->post()) {
-            $data = array(
-                'title' => $this->input->post('title'),
-                'description' => $this->input->post('description'),
-            );
-            $this->Goal_model->update_goal($id, $data);  // Update the goal
-            redirect('goal/list');  // Redirect after update
-        }
-    }
-    
-    public function delete($id) {
-        $this->Goal_model->delete_goal($id);  // Delete goal by ID
-        redirect('goal/list');  // Redirect to the goal list after deletion
+    // Get all goals for the logged-in user
+    public function get_goals($user_id) {
+        $query = $this->db->get_where('goals', array('user_id' => $user_id));
+        return $query->result(); // Return an array of goals
     }
 
+    // Get a specific goal by ID
+    public function get_goal($goal_id) {
+        $query = $this->db->get_where('goals', array('id' => $goal_id));
+        return $query->row(); // Return a single goal object
+    }
 
+    // Update a goal
+    public function update_goal($goal_id, $data) {
+        $this->db->where('id', $goal_id);
+        $this->db->update('goals', $data); // Update goal data based on the goal ID
+    }
 
+    // Delete a goal
+    public function delete_goal($goal_id) {
+        $this->db->where('id', $goal_id);
+        $this->db->delete('goals'); // Delete the goal from the 'goals' table
+    }
 }
