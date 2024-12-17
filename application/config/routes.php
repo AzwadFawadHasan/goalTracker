@@ -64,4 +64,13 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['auth/login'] = 'auth/login';
 $route['auth/register'] = 'auth/register';
-$route['auth/logout'] = 'auth/logout';
+$route['auth/logout'] = 'auth/logout'; 
+
+
+$route['dashboard'] = 'dashboard'; 
+
+$route['goal/add'] = 'goal/add';
+$route['goal/list'] = 'goal/list';
+$route['goal/edit/(:num)'] = 'goal/edit/$1';
+$route['goal/update/(:num)'] = 'goal/update/$1';
+$route['goal/delete/(:num)'] = 'goal/delete/$1';
