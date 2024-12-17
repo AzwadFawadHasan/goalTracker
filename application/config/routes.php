@@ -49,17 +49,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'welcome';
+
+
+// $route['default_controller'] = 'auth';
 // $route['404_override'] = '';
 // $route['translate_uri_dashes'] = FALSE;
+// $route['auth/login'] = 'auth/login';
+// $route['auth/register'] = 'auth/register';
+// $route['auth/logout'] = 'auth/logout';
+// $route['default_controller'] = 'auth/login';  // Set the default controller to login
 
-// // Default controller to load
-// $route['default_controller'] = 'auth';  // Change 'welcome' to your own controller later
-
-// User Authentication Routes
-$route['default_controller'] = 'auth/login';  // Set the default page (login page)
-$route['login'] = 'auth/login';  // Login page route
-$route['register'] = 'auth/register';  // Registration page route
-$route['logout'] = 'auth/logout';  // Logout route
-$route['404_override'] = '';  // Default error page if route not found
+$route['default_controller'] = 'auth'; // Use the 'auth' controller as the default
+$route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+$route['auth/login'] = 'auth/login';
+$route['auth/register'] = 'auth/register';
+$route['auth/logout'] = 'auth/logout';

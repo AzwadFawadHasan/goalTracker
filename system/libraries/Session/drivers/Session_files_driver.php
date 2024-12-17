@@ -46,7 +46,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author	Andrey Andreev
  * @link	https://codeigniter.com/user_guide/libraries/sessions.html
  */
-// #[\ReturnTypeWillChange]
 class CI_Session_files_driver extends CI_Session_driver implements SessionHandlerInterface {
 
 	/**
