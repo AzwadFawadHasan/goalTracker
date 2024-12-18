@@ -74,3 +74,7 @@ $route['goal/list'] = 'goal/list';
 $route['goal/edit/(:num)'] = 'goal/edit/$1';
 $route['goal/update/(:num)'] = 'goal/update/$1';
 $route['goal/delete/(:num)'] = 'goal/delete/$1';
+
+
+$route['test'] = 'test/index';
+$route['test'] = 'test/redis_test';

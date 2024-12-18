@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -387,6 +388,10 @@ $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;
 
+
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Cookie Related Variables
@@ -523,3 +528,27 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+
+
+// Redis configuration
+// application/config/config.php
+
+// $config['sess_driver'] = 'predis';  // Use Predis for sessions
+// $config['sess_save_path'] = 'tcp://127.0.0.1:6379';  // Redis server connection
+// $config['sess_cookie_name'] = 'ci_session';  // Session cookie name (default)
+// $config['sess_expiration'] = 7200;  // Session expiration time (2 hours)
+// $config['sess_match_ip'] = FALSE;  // Disable matching IP (set to TRUE if you want this feature)
+// $config['sess_time_to_update'] = 300;  // Time to update session ID
+// $config['sess_regenerate_destroy'] = TRUE;  // Regenerate session ID on every request
+
+// Session settings
+$config['sess_driver'] = 'redis';
+$config['sess_save_path'] = 'tcp://localhost:6379';
+$config['sess_cookie_name'] = 'ci_session';
+$config['sess_expiration'] = 7200; // Session expires in 2 hours
+$config['sess_match_ip'] = FALSE;
+$config['sess_time_to_update'] = 300; // Regenerate session ID every 5 minutes
+$config['sess_regenerate_destroy'] = FALSE; // Retain old session data
+
+
