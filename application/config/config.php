@@ -484,6 +484,7 @@ $config['csrf_exclude_uris'] = array();
 */
 $config['compress_output'] = FALSE;
 
+
 /*
 |--------------------------------------------------------------------------
 | Master Time Reference
@@ -543,12 +544,22 @@ $config['proxy_ips'] = '';
 // $config['sess_regenerate_destroy'] = TRUE;  // Regenerate session ID on every request
 
 // Session settings
-$config['sess_driver'] = 'redis';
-$config['sess_save_path'] = 'tcp://localhost:6379';
-$config['sess_cookie_name'] = 'ci_session';
-$config['sess_expiration'] = 7200; // Session expires in 2 hours
-$config['sess_match_ip'] = FALSE;
-$config['sess_time_to_update'] = 300; // Regenerate session ID every 5 minutes
-$config['sess_regenerate_destroy'] = FALSE; // Retain old session data
+// $config['sess_driver'] = 'redis';
+// $config['sess_save_path'] = 'tcp://localhost:6379';
+// // $config['port'] = 6379;
+// // $config['sess_cookie_name'] = '';
+// $config['sess_cookie_name'] = 'ci_session';
+// $config['sess_expiration'] = 7200; // Session expires in 2 hours
+// $config['sess_match_ip'] = FALSE;
+// $config['sess_time_to_update'] = 300; // Regenerate session ID every 5 minutes
+// $config['sess_regenerate_destroy'] = FALSE; // Retain old session data
 
 
+
+$config['sess_driver'] = 'redis';  // Use Redis as the session driver
+$config['sess_cookie_name'] = 'ci_session'; // Name of the session cookie
+$config['sess_expiration'] = 7200; // Session expiration time (in seconds)
+$config['sess_save_path'] = 'tcp://127.0.0.1:6379'; // Redis server address (default: localhost, port 6379)
+$config['sess_match_ip'] = FALSE; // Match user IP address
+$config['sess_time_to_update'] = 300; // How often the session ID is regenerated
+$config['sess_regenerate_destroy'] = FALSE; // Do not destroy old session data when regenerating session ID
