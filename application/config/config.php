@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -23,7 +24,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/goalTracker/goal_tracker/';
+//$config['base_url'] = '';
+$config['base_url'] = 'http://localhost:8080/goalTracker/';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -377,13 +380,17 @@ $config['encryption_key'] = '';
 | except for 'cookie_prefix' and 'cookie_httponly', which are ignored here.
 |
 */
-$config['sess_driver'] = 'database';
+$config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_expiration'] = 7200;
 $config['sess_save_path'] = NULL;
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;
+
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -477,6 +484,7 @@ $config['csrf_exclude_uris'] = array();
 */
 $config['compress_output'] = FALSE;
 
+
 /*
 |--------------------------------------------------------------------------
 | Master Time Reference
@@ -521,3 +529,20 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+/*
+|--------------------------------------------------------------------------
+| Redis for caching
+|-*/
+
+$config['sess_driver'] = 'redis';  // Use Redis as the session driver
+$config['sess_cookie_name'] = 'ci_session'; // Name of the session cookie
+$config['sess_expiration'] = 7200; // Session expiration time (in seconds)
+$config['sess_save_path'] = 'tcp://127.0.0.1:6379'; // Redis server address (default: localhost, port 6379)
+$config['sess_match_ip'] = FALSE; // Match user IP address
+$config['sess_time_to_update'] = 300; // How often the session ID is regenerated
+$config['sess_regenerate_destroy'] = FALSE; // Do not destroy old session data when regenerating session ID
+// Use Redis for caching
+$config['cache_path'] = ''; // Path to cache files, leave empty for default
+$config['cache_driver'] = 'redis'; // Set cache driver to Redis
+$config['cache_save_path'] = 'tcp://127.0.0.1:6379'; // Redis server address
