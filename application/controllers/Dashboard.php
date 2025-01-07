@@ -17,13 +17,40 @@ class Dashboard extends CI_Controller {
         }
     }
 
+    // public function index() {
+    //     $user_id = $this->session->userdata('user_id');
+    //     // Fetch all goals for the logged-in user
+    //     $data['goals'] = $this->Goal_model->get_goals($user_id);
+    //     // Load the dashboard view with the goals
+    //     $this->load->view('dashboard', $data);
+    // }
+
     public function index() {
         $user_id = $this->session->userdata('user_id');
-        // Fetch all goals for the logged-in user
-        $data['goals'] = $this->Goal_model->get_goals($user_id);
+    
+        // Load Redis cache driver
+        $this->load->driver('cache', array('adapter' => 'redis')); 
+    
+        $cache_key = 'user_goals_' . $user_id;
+        $goals = $this->cache->get($cache_key); // Try to get goals from Redis cache
+    
+        if ($goals) {
+            // Data loaded from Redis cache
+            echo "Goals loaded from Redis. Cache Key: " . $cache_key . "<br>"; // Show the cache key
+        } else {
+            // Data not found in Redis, fetch from the database
+            echo "Goals loaded from MySQL<br>";
+            $goals = $this->Goal_model->get_goals($user_id);
+            
+            // Store the goals data in Redis with an expiration time of 1 hour (3600 seconds)
+            $this->cache->save($cache_key, $goals, 3600);
+        }
+    
         // Load the dashboard view with the goals
+        $data['goals'] = $goals;
         $this->load->view('dashboard', $data);
     }
+    
 
     // Create a new goal
     public function create_goal() {
