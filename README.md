@@ -1,5 +1,5 @@
 # goalTracker
-goalTracker using codeigniter
+A simple goalTracker demo application using codeigniter 3.1.11 to show how to use redis for user session caching. ![](https://api.visitorbadge.io/api/VisitorHit?user=AzwadFawadHasan&repo=goalTracker&countColor=%237B1E7A)
 # Installation
 For Windows 10 with WAMP, manually compiling and installing the Redis extension from source isn't the recommended approach. Instead, I'd suggest these easier steps:
 
